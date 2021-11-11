@@ -4,6 +4,8 @@ const cors = require("cors");
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 
+const ObjectId = require("mongodb").ObjectId;
+
 const port = process.env.PORT || 5000;
 
 // middleware
@@ -29,6 +31,15 @@ async function run() {
       const products = await cursor.toArray();
       res.send(products);
     });
+
+    // get api for load individual user orders in UI
+    app.get("/orders", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      const cursor = ordersCollection.find(query);
+      const myOrders = await cursor.toArray();
+      res.json(myOrders);
+    });
     // post api for products add to the server
     app.post("/products", async (req, res) => {
       const product = req.body;
@@ -43,6 +54,15 @@ async function run() {
       console.log(result);
 
       res.json(result);
+    });
+
+    // for delete api
+    app.delete("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      /* const query = { _id: ObjectId(id) }; */
+      /* const result = await ordersCollection.deleteOne(query); */
+      console.log("deleting user with id", id);
+      res.json(1);
     });
   } finally {
     // await client.close()
