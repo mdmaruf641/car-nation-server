@@ -55,6 +55,13 @@ async function run() {
       res.json({ admin: isAdmin });
     });
 
+    // get api for load reviews in UI from server
+    app.get("/reviews", async (req, res) => {
+      const cursor = reviewsCollection.find({});
+      const reviews = await cursor.toArray();
+      res.send(reviews);
+    });
+
     // post api for products add to the server
     app.post("/products", async (req, res) => {
       const product = req.body;
