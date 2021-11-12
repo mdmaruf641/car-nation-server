@@ -24,7 +24,7 @@ async function run() {
     const database = client.db("carNation");
     const productsCollection = database.collection("products");
     const ordersCollection = database.collection("orders");
-
+    const usersCollection = database.collection("users");
     // get api for products load UI from the server
     app.get("/products", async (req, res) => {
       const cursor = productsCollection.find({});
@@ -51,8 +51,14 @@ async function run() {
     app.post("/orders", async (req, res) => {
       const order = req.body;
       const result = await ordersCollection.insertOne(order);
-      console.log(result);
+      res.json(result);
+    });
 
+    // post api for users add to the server
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
+      console.log(result);
       res.json(result);
     });
 
