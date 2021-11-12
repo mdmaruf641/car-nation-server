@@ -40,6 +40,19 @@ async function run() {
       const myOrders = await cursor.toArray();
       res.json(myOrders);
     });
+
+    // get api for checking is admin or not
+    app.get("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const user = await usersCollection.findOne(query);
+      let isAdmin = false;
+      if (user?.role === "admin") {
+        isAdmin = true;
+      }
+      res.json({ admin: isAdmin });
+    });
+
     // post api for products add to the server
     app.post("/products", async (req, res) => {
       const product = req.body;
