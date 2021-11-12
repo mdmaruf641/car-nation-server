@@ -62,6 +62,16 @@ async function run() {
       res.json(result);
     });
 
+    // put api for make admin
+    app.put("/users", async (req, res) => {
+      const user = req.body;
+      console.log("put", user);
+      const filter = { email: user.email };
+      const updateDoc = { $set: { role: "admin" } };
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      res.json(result);
+    });
+
     // for delete api
     app.delete("/orders/:id", async (req, res) => {
       const id = req.params.id;
