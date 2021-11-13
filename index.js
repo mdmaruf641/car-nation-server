@@ -106,10 +106,9 @@ async function run() {
     // for delete api
     app.delete("/orders/:id", async (req, res) => {
       const id = req.params.id;
-      /* const query = { _id: ObjectId(id) }; */
-      /* const result = await ordersCollection.deleteOne(query); */
-      console.log("deleting user with id", id);
-      res.json(1);
+      const query = { _id: ObjectId(id) };
+      const result = await ordersCollection.deleteOne(query);
+      res.json(result);
     });
   } finally {
     // await client.close()
