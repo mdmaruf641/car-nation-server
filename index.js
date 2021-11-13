@@ -34,7 +34,8 @@ async function run() {
       res.send(products);
     });
 
-    app.get("/orders", async (req, res) => {
+    // get api for all orders load in UI for admin dashboard
+    app.get("/orders/admin", async (req, res) => {
       const cursor = ordersCollection.find({});
       const orders = await cursor.toArray();
       res.send(orders);
