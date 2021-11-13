@@ -34,6 +34,12 @@ async function run() {
       res.send(products);
     });
 
+    app.get("/orders", async (req, res) => {
+      const cursor = ordersCollection.find({});
+      const orders = await cursor.toArray();
+      res.send(orders);
+    });
+
     // get api for load individual user orders in UI
     app.get("/orders", async (req, res) => {
       const email = req.query.email;
